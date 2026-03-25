@@ -12,19 +12,17 @@ class HotelListView(APIView):
         
         hotels = Hotel.objects.all()
         
-        # Simulated logic: if dates are provided, we 'exclude' some hotels randomly
-        # Or simply return all hotels for the sake of functionality
-        data = []
-        for h in hotels:
-            data.append({"hotel_name": h.name})
-            
-        # The prompt just says "need to change based on checkin or checkout dates" or something similar
-        # If dates are passed, let's reverse the list or omit the last one to show it "changed"
-        if checkin_date or checkout_date:
-            if len(data) > 1:
-                # remove the last one just to simulate changing availability
-                data = data[:-1]
-                
+        # If dates are provided, filter out hotels that are booked for these dates
+        if checkin_date and checkout_date:
+            # Overlap condition: Reservation checkin < requested checkout AND Reservation checkout > requested checkin
+            overlapping_reservations = Reservation.objects.filter(
+                checkin__lt=checkout_date,
+                checkout__gt=checkin_date
+            )
+            booked_hotel_names = overlapping_reservations.values_list('hotel_name', flat=True)
+            hotels = hotels.exclude(name__in=booked_hotel_names)
+        
+        data = [{"hotel_name": h.name} for h in hotels]
         return Response(data, status=status.HTTP_200_OK)
 
 class ReservationConfirmationView(APIView):
