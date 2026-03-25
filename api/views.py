@@ -1,11 +1,22 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.types import OpenApiTypes
 from .models import Hotel, Reservation
-from .serializers import HotelSerializer, ReservationSerializer
+from .serializers import HotelSerializer, ReservationSerializer, HotelListResponseSerializer, ReservationResponseSerializer
 import random
 
 class HotelListView(APIView):
+    @extend_schema(
+        operation_id='getListOfHotels',
+        description='Returns a list of available hotels based on requested dates.',
+        parameters=[
+            OpenApiParameter(name='checkin', description='Requested check-in date (YYYY-MM-DD)', required=False, type=OpenApiTypes.DATE),
+            OpenApiParameter(name='checkout', description='Requested check-out date (YYYY-MM-DD)', required=False, type=OpenApiTypes.DATE),
+        ],
+        responses={200: HotelListResponseSerializer(many=True)}
+    )
     def get(self, request):
         checkin_date = request.query_params.get('checkin')
         checkout_date = request.query_params.get('checkout')
@@ -26,6 +37,12 @@ class HotelListView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 class ReservationConfirmationView(APIView):
+    @extend_schema(
+        operation_id='reservationConfirmation',
+        description='Submits a hotel reservation and returns a confirmation number.',
+        request=ReservationSerializer,
+        responses={201: ReservationResponseSerializer, 400: OpenApiTypes.OBJECT}
+    )
     def post(self, request):
         serializer = ReservationSerializer(data=request.data)
         if serializer.is_valid():

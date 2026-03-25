@@ -24,3 +24,10 @@ class ReservationSerializer(serializers.ModelSerializer):
         for guest_data in guests_data:
             Guest.objects.create(reservation=reservation, **guest_data)
         return reservation
+
+class HotelListResponseSerializer(serializers.Serializer):
+    hotel_name = serializers.CharField(help_text="Name of the available hotel")
+
+class ReservationResponseSerializer(serializers.Serializer):
+    confirmation_number = serializers.CharField(help_text="Alphanumeric confirmation code")
+
