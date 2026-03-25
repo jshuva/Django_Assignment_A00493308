@@ -15,27 +15,22 @@ This is a REST API made with Django Rest Framework for a Hotel Reservation Syste
    ```bash
    cd hotel_api
    ```
-2. Set up the virtual environment with `uv` and activate it (assuming Windows):
+2. Set up the environment and install dependencies automatically using `uv`:
    ```bash
-   uv venv
-   call .venv\Scripts\activate.bat
+   uv sync
    ```
-3. Install dependencies using `uv`:
+3. Run database migrations prefixing with `uv run` to use the virtual environment:
    ```bash
-   uv pip install django djangorestframework
+   uv run python manage.py makemigrations api
+   uv run python manage.py migrate
    ```
-4. Run database migrations:
+4. Populate dummy hotel data (Optional):
    ```bash
-   python manage.py makemigrations api
-   python manage.py migrate
+   uv run python populate.py
    ```
-5. Populate dummy hotel data (Optional):
+5. Run the local development server:
    ```bash
-   python populate.py
-   ```
-6. Run the local development server:
-   ```bash
-   python manage.py runserver
+   uv run python manage.py runserver
    ```
 7. Use Postman or another REST client to test the endpoints at `http://127.0.0.1:8000/`.
 
