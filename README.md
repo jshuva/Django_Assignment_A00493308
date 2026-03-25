@@ -1,0 +1,97 @@
+# Hotel Reservation API
+
+This is a REST API made with Django Rest Framework for a Hotel Reservation System. It satisfies the MCDA5550 REST API Project assignment requirements.
+
+## Features
+- `getListOfHotels` - Returns a list of hotels from the simulation.
+- `reservationConfirmation` - Books a room and returns a confirmation number.
+
+## Requirements
+- `uv` for python dependencies
+- Python 3.10+
+
+## Setup & Run Instructions
+1. Navigate to the `hotel_api` directory:
+   ```bash
+   cd hotel_api
+   ```
+2. Set up the virtual environment with `uv` and activate it (assuming Windows):
+   ```bash
+   uv venv
+   call .venv\Scripts\activate.bat
+   ```
+3. Install dependencies using `uv`:
+   ```bash
+   uv pip install django djangorestframework
+   ```
+4. Run database migrations:
+   ```bash
+   python manage.py makemigrations api
+   python manage.py migrate
+   ```
+5. Populate dummy hotel data (Optional):
+   ```bash
+   python populate.py
+   ```
+6. Run the local development server:
+   ```bash
+   python manage.py runserver
+   ```
+7. Use Postman or another REST client to test the endpoints at `http://127.0.0.1:8000/`.
+
+## API Definition
+No authentication (API Keys/credentials) is currently required for these endpoints.
+
+### 1. Get List of Hotels
+- **Endpoint**: `/api/getListOfHotels`
+- **Method**: `GET`
+- **Query Params**: `checkin` (optional), `checkout` (optional)
+- **Response**: List of hotel objects.
+
+Example request:
+```
+GET http://127.0.0.1:8000/api/getListOfHotels?checkin=2026-04-01&checkout=2026-04-05
+```
+Example response:
+```json
+[
+  {
+    "hotel_name": "The Grand Budapest Hotel"
+  },
+  {
+    "hotel_name": "Overlook Hotel"
+  }
+]
+```
+
+### 2. Reservation Confirmation
+- **Endpoint**: `/api/reservationConfirmation`
+- **Method**: `POST`
+- **Description**: Submits a hotel reservation and returns a confirmation number.
+- **Request Body**:
+```json
+{
+  "hotel_name": "The Grand Budapest Hotel",
+  "checkin": "2026-04-01",
+  "checkout": "2026-04-05",
+  "guests_list": [
+    {
+      "guest_name": "John Doe",
+      "gender": "Male"
+    },
+    {
+      "guest_name": "Jane Doe",
+      "gender": "Female"
+    }
+  ]
+}
+```
+- **Response**:
+```json
+{
+  "confirmation_number": "A1B2C3D4"
+}
+```
+
+## Note
+The AWS Elastic Beanstalk deployment portion is omitted based on instructions. Only local configuration and basic git usage are strictly provided.
