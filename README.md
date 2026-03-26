@@ -1,6 +1,14 @@
-# Hotel Reservation API
+# MCDA5550: Web Mobile and Cloud Application
+## REST API Project - Hotel Reservation System
 
-This is a REST API made with Django Rest Framework for a Hotel Reservation System. It satisfies the MCDA5550 REST API Project assignment requirements.
+**Student Details:**  
+Name: Jayanta Sarker Shuva  
+Email: Jayanta.sarker.shuva@smu.ca  
+Student ID: A00493308  
+
+---
+
+This is a REST API made with Django Rest Framework for a Hotel Reservation System, satisfying the course assignment requirements.
 
 ## Features
 - `getListOfHotels` - Returns a list of hotels from the simulation.
@@ -87,6 +95,3 @@ Example response:
   "confirmation_number": "A1B2C3D4"
 }
 ```
-
-## Note
-The AWS Elastic Beanstalk deployment portion is omitted based on instructions. Only local configuration and basic git usage are strictly provided.
