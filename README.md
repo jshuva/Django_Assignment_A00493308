@@ -6,6 +6,10 @@ Name: Jayanta Sarker Shuva
 Email: Jayanta.sarker.shuva@smu.ca  
 Student ID: A00493308  
 
+**Live API Deployment:**  
+The API is fully deployed and interactive via Swagger UI:  
+👉 [https://jshuva09.pythonanywhere.com/api/docs/](https://jshuva09.pythonanywhere.com/api/docs/)
+
 ---
 
 This is a REST API made with Django Rest Framework for a Hotel Reservation System, satisfying the course assignment requirements.
